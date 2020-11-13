@@ -1,6 +1,7 @@
 package com.abnamro.transactionreporting.services.reader;
 
 
+import com.abnamro.transactionreporting.config.TransactionReportingPropertyValues;
 import com.abnamro.transactionreporting.constant.TransactionReportingConstants;
 import com.abnamro.transactionreporting.model.FileRecord;
 import com.abnamro.transactionreporting.model.dataObjects.ReportModel;
@@ -24,9 +25,20 @@ import static com.abnamro.transactionreporting.constant.TransactionReportingCons
 @Component
 public class FileReaderImpl implements FileReader {
 
+    /**
+     * Constructor Initialization.
+     *
+     * @param transactionReportingPropertyValues
+     */
+    public FileReaderImpl(TransactionReportingPropertyValues transactionReportingPropertyValues) {
+        this.transactionReportingPropertyValues = transactionReportingPropertyValues;
+    }
+
     public Logger getLogger() {
         return log;
     }
+
+    private final TransactionReportingPropertyValues transactionReportingPropertyValues;
 
     /**
      * Reads flat file.
@@ -36,8 +48,8 @@ public class FileReaderImpl implements FileReader {
      */
     @Override
     public List<ReportModel> readFlatFile() throws IOException {
-        List<FileRecord> result = new ArrayList<>();
-        List<ReportModel> result1 = new ArrayList<>();
+        final List<FileRecord> result = new ArrayList<>();
+        final List<ReportModel> result1 = new ArrayList<>();
 
         log.info("Reading Input file :: Started");
 
@@ -45,14 +57,26 @@ public class FileReaderImpl implements FileReader {
             BufferedReader br = new BufferedReader(new java.io.FileReader(TransactionReportingConstants.INPUT_FILE));
             String currentLine;
             while ((currentLine = br.readLine()) != null) {
-                if (CLIENT_NUMBER_1234.equalsIgnoreCase(currentLine.substring(7, 11).trim())) {
-                    FileRecord fileRecord = new FileRecord();
+                FileRecord fileRecord = new FileRecord();
+                log.info("Client mode is [{}]", this.transactionReportingPropertyValues.isClientMode());
+                if (this.transactionReportingPropertyValues.isClientMode()) {
+                    if (CLIENT_NUMBER_1234.equalsIgnoreCase(currentLine.substring(7, 11).trim())) {
+                        readAndMapClientInformation(fileRecord, currentLine);
+                        readAndMapProductInformation(fileRecord, currentLine);
+                        readAndMapTransactionInformation(fileRecord, currentLine);
+                        result.add(fileRecord);
+                        result1.add(mapFileRecordToReportModel(fileRecord));
+                    }
+
+                } else {
                     readAndMapClientInformation(fileRecord, currentLine);
                     readAndMapProductInformation(fileRecord, currentLine);
                     readAndMapTransactionInformation(fileRecord, currentLine);
                     result.add(fileRecord);
                     result1.add(mapFileRecordToReportModel(fileRecord));
+
                 }
+
             }
         } catch (Exception e) {
             e.printStackTrace();
