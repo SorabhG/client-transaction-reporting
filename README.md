@@ -1,13 +1,20 @@
 # client-transaction-reporting
+#Purpose
 It is mainly developed to
  - Read the Future Transactions done by client from flat file.
     Note - In future, File can be read by defing a xml schema for a record. https://jrecordbind.org/
  - Process the file and format it.
  - Write the file to output file output.csv.
 
-Currently The scheduler is schduled at frequency of 1 minute to generate Output.csv. However, it(cron expression) can be changed to daily frequency.
+#Technical Details and Design
+1. Currently The scheduler is schduled at frequency of 1 minute to generate Output.csv. However, it(cron expression) can be changed to daily frequency.
+2. This project follows SOLID principle.
+    - Every class is his own single Responsiblity
+    - They follow open close principle.
+    - Code is not tightly coupled. That is implementation are abstracted.
+3. All constants are housed in one file.
+4. Frequency of Cron job can be read from application.properties. If requried. Hence no external deployment is needed.
 
- This project uses SOLID principle.
 
 #Setup.
 It is a stand alone Java project. To run this project , you require the following componets/software on your machine.
@@ -16,7 +23,7 @@ It is a stand alone Java project. To run this project , you require the followin
 * Maven
 * IDE - (intellij or eclipse)
 
-Steps
+# Installation and execution Steps
 1. Clone the code into your IDE
 2. Go to terminal and build the project by using, MVC clean install.
 3. Wait for a minute and after that following can be found on console logs
@@ -30,6 +37,13 @@ Steps
 2020-11-13 18:14:00.117  INFO 4044 --- [   scheduling-1] c.a.t.services.writer.CSVWriterImpl      : Writing Output file :: Finished
 2020-11-13 18:14:00.117  INFO 4044 --- [   scheduling-1] c.a.t.main.ReportingServiceImpl          : Transaction Reporting :: Finished
 2020-11-13 18:14:00.117  INFO 4044 --- [   scheduling-1] c.a.t.scheduler.ClientReportScheduler    : Scheduler Finished
+
+#Output
+The output.csv is generated at root level. Can be seen futher.
+
+#Documentation
+All services and components have proper comments for devs to understand logic and maintain the software in future.
+
 
 #Spec and Requirements-
 Project Requirement Specifications can be found in /src/main/resources.

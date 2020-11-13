@@ -10,6 +10,10 @@ import java.util.List;
  */
 @Service
 public interface ReportProcessor {
-
+    /**
+     *
+     * @param reportFeilds {@link List<ReportModel>}
+     * @return
+     */
     List<ReportModel> formatReport(List<ReportModel> reportFeilds);
 }

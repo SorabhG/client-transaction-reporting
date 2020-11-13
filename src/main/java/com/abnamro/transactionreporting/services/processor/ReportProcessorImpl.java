@@ -30,7 +30,7 @@ public class ReportProcessorImpl implements ReportProcessor {
     @Override
     public List<ReportModel> formatReport(List<ReportModel> reportFeilds) {
         getLogger().info("Report Formatting :: Started");
-        List<ReportModel> formatedReport = reportFeilds.stream().collect(
+        List<ReportModel> formattedReport = reportFeilds.stream().collect(
                 groupingBy(
                         ReportModel::getClientInformation,
                         groupingBy(
@@ -43,13 +43,13 @@ public class ReportProcessorImpl implements ReportProcessor {
                 )
         ).entrySet()
                 .stream()
-                .flatMap(e1 -> e1.getValue()
+                .flatMap(entry1 -> entry1.getValue()
                         .entrySet()
                         .stream()
-                        .map(e2 -> new ReportModel(e1.getKey(), e2.getKey(), e2.getValue())))
+                        .map(entry2 -> new ReportModel(entry1.getKey(), entry2.getKey(), entry2.getValue())))
                 .collect(Collectors.toList());
         getLogger().info("Report Formatting :: Finished");
-        return formatedReport;
+        return formattedReport;
     }
 
 }

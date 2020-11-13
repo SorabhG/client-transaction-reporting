@@ -16,19 +16,21 @@ public class ClientReportScheduler {
 
     private final ReportingService reportingService;
 
-
+    /**
+     * Constuctor Intialization.
+     * @param reportingService
+     */
     public ClientReportScheduler(ReportingService reportingService) {
         this.reportingService = reportingService;
     }
 
 
     @Scheduled(cron = "${reportingService.job.interval:0 */1 * ? * *}")
-   // @Scheduled(cron = "${reportingService.job.interval:0 0 6 * * ?}")  --every day 6 am.
+    // @Scheduled(cron = "${reportingService.job.interval:0 0 6 * * ?}")  --every day 6 am.
     public void startReporting() throws IOException {
         log.info("Scheduler started");
         this.reportingService.process();
         log.info("Scheduler Finished");
-
     }
 
 }

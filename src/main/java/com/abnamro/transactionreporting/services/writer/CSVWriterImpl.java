@@ -7,6 +7,7 @@ import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.csv.CSVFormat;
 import org.apache.commons.csv.CSVPrinter;
 import org.slf4j.Logger;
+import org.springframework.stereotype.Component;
 
 import java.io.BufferedWriter;
 import java.io.IOException;
@@ -19,6 +20,7 @@ import java.util.List;
  * This class is responsible for writing java objects to CSV file.
  */
 @Slf4j
+@Component
 public class CSVWriterImpl implements FileWriter {
 
     public Logger getLogger() {
@@ -26,7 +28,7 @@ public class CSVWriterImpl implements FileWriter {
     }
 
     /**
-     * @param csvName     {@link String }
+     * @param csvName      {@link String }
      * @param reportModels {@link List}
      * @throws IOException
      */

@@ -62,6 +62,10 @@ public class FileReaderImpl implements FileReader {
         return result1;
     }
 
+    /**
+     * @param fileRecord
+     * @param currentLine
+     */
     private void readAndMapClientInformation(final FileRecord fileRecord, final String currentLine) {
 
         fileRecord.setClientType(currentLine.substring(3, 7).trim());
@@ -71,6 +75,10 @@ public class FileReaderImpl implements FileReader {
 
     }
 
+    /**
+     * @param fileRecord
+     * @param currentLine
+     */
     private void readAndMapProductInformation(final FileRecord fileRecord, final String currentLine) {
 
         fileRecord.setProductGroupCode(currentLine.substring(25, 27).trim());
@@ -80,14 +88,20 @@ public class FileReaderImpl implements FileReader {
 
     }
 
+    /**
+     * @param fileRecord
+     * @param currentLine
+     */
     private void readAndMapTransactionInformation(final FileRecord fileRecord, final String currentLine) {
         fileRecord.setQuantityLong(new BigDecimal(currentLine.substring(52, 62).trim()));
         fileRecord.setGetQuantityShort(new BigDecimal(currentLine.substring(63, 73).trim()));
     }
 
+    /**
+     * @param fileRecord
+     * @return
+     */
     private ReportModel mapFileRecordToReportModel(final FileRecord fileRecord) {
-
-
         ReportModel reportModel = ReportModel.builder()
                 .clientInformation(fileRecord.getClientType() + fileRecord.getClientNumber() + fileRecord.getAccountNumber() + fileRecord.getSymbol())
                 .productInformation(fileRecord.getExchangeCode() + fileRecord.getProductGroupCode() + fileRecord.getSymbol() + fileRecord.getExpirationDate())

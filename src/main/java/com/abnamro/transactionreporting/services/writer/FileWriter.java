@@ -12,5 +12,11 @@ import java.util.List;
  */
 @Service
 public interface FileWriter {
+    /**
+     *
+     * @param csvName
+     * @param reportModels
+     * @throws IOException
+     */
     void writeCSV(final String csvName, final List<ReportModel> reportModels) throws IOException;
 }
