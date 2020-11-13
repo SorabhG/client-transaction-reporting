@@ -56,9 +56,9 @@ public class FileReaderImpl implements FileReader {
         try {
             BufferedReader br = new BufferedReader(new java.io.FileReader(TransactionReportingConstants.INPUT_FILE));
             String currentLine;
+            log.info("Client mode is [{}]", this.transactionReportingPropertyValues.isClientMode());
             while ((currentLine = br.readLine()) != null) {
                 FileRecord fileRecord = new FileRecord();
-                log.info("Client mode is [{}]", this.transactionReportingPropertyValues.isClientMode());
                 if (this.transactionReportingPropertyValues.isClientMode()) {
                     if (CLIENT_NUMBER_1234.equalsIgnoreCase(currentLine.substring(7, 11).trim())) {
                         readAndMapClientInformation(fileRecord, currentLine);
