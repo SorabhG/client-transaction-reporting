@@ -7,8 +7,8 @@ It is mainly developed to
  - Write the file to output file output.csv.
 
 #Technical Details and Design Highlights.
-    1. ClientReportScheduler is main entry point that will trigger the reporting job. Currently The scheduler is schduled at frequency of 1 minute to generate Output.csv. However, it(cron expression) can be changed to daily frequency.
-    2. The solution complies with software engineering design principles. Like the Single Responsibility principle, Interface segregation principle (Dependency Injection)
+    * ClientReportScheduler is main entry point that will trigger the reporting job. Currently The scheduler is schduled at frequency of 1 minute to generate Output.csv. However, it(cron expression) can be changed to daily frequency.
+    * The solution complies with software engineering design principles. Like the Single Responsibility principle, Interface segregation principle (Dependency Injection)
     3. Code is not tightly coupled. For instance you can introduce a new writer class. (XML writer in future) and current design will still work. 
     4. The solution is having clean, Well documented, Clear logging, optimized code with Unit testing coverage and clear comments and documentation.
     5. The Solution is based on latest java8 stream API.
