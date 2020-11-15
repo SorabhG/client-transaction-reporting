@@ -18,7 +18,7 @@ Note - the Requirement says that input flat file contains future transactions fo
 So the solution has an addition feature (flag), which will allow the user to generate the report for all the client OR ONLY for client 1234, without any code change and without any deployed.
 
 
-#Setup.
+#Softwares requirement.
 It is a stand alone Java project. To run this project , you require the following componets/software on your machine.
 * Java 8+
 * Git
