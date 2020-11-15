@@ -25,6 +25,8 @@ import static com.abnamro.transactionreporting.constant.TransactionReportingCons
 @Slf4j
 @Component
 public class FileReaderImpl implements FileReader {
+    private final TransactionReportingPropertyValues transactionReportingPropertyValues;
+
 
     /**
      * Constructor Initialization.
@@ -38,8 +40,6 @@ public class FileReaderImpl implements FileReader {
     public Logger getLogger() {
         return log;
     }
-
-    private final TransactionReportingPropertyValues transactionReportingPropertyValues;
 
     /**
      * Reads flat file.
