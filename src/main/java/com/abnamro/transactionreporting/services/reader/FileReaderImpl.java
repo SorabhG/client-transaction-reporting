@@ -11,6 +11,7 @@ import org.springframework.stereotype.Component;
 
 import java.io.BufferedReader;
 import java.io.IOException;
+import java.io.InputStreamReader;
 import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.List;
@@ -48,32 +49,26 @@ public class FileReaderImpl implements FileReader {
      */
     @Override
     public List<ReportModel> readFlatFile() throws IOException {
-        final List<FileRecord> result = new ArrayList<>();
-        final List<ReportModel> result1 = new ArrayList<>();
+        final List<FileRecord> fileRecords = new ArrayList<>();
+        final List<ReportModel> reportModels = new ArrayList<>();
 
         log.info("Reading Input file :: Started");
 
         try {
-            BufferedReader br = new BufferedReader(new java.io.FileReader(TransactionReportingConstants.INPUT_FILE));
+            BufferedReader br = new BufferedReader(
+                    new InputStreamReader(this.getClass().getClassLoader()
+                            .getResourceAsStream(TransactionReportingConstants.INPUT_FILE)));
             String currentLine;
             log.info("Client mode is [{}]", this.transactionReportingPropertyValues.isClientMode());
             while ((currentLine = br.readLine()) != null) {
                 FileRecord fileRecord = new FileRecord();
                 if (this.transactionReportingPropertyValues.isClientMode()) {
                     if (CLIENT_NUMBER_1234.equalsIgnoreCase(currentLine.substring(7, 11).trim())) {
-                        readAndMapClientInformation(fileRecord, currentLine);
-                        readAndMapProductInformation(fileRecord, currentLine);
-                        readAndMapTransactionInformation(fileRecord, currentLine);
-                        result.add(fileRecord);
-                        result1.add(mapFileRecordToReportModel(fileRecord));
+                        readFlatFileAndMapsToJavaObject(fileRecords, reportModels, currentLine, fileRecord);
                     }
 
                 } else {
-                    readAndMapClientInformation(fileRecord, currentLine);
-                    readAndMapProductInformation(fileRecord, currentLine);
-                    readAndMapTransactionInformation(fileRecord, currentLine);
-                    result.add(fileRecord);
-                    result1.add(mapFileRecordToReportModel(fileRecord));
+                    readFlatFileAndMapsToJavaObject(fileRecords, reportModels, currentLine, fileRecord);
 
                 }
 
@@ -81,14 +76,32 @@ public class FileReaderImpl implements FileReader {
         } catch (Exception e) {
             e.printStackTrace();
         }
-        //result.forEach(System.out::println);
+        //fileRecords.forEach(System.out::println);
         log.info("Reading Input file :: Finished");
-        return result1;
+        return reportModels;
     }
 
     /**
-     * @param fileRecord
-     * @param currentLine
+     * Reads Flat file and maps it to java objects.
+     *
+     * @param fileRecords  {@Link List<FileRecord>}
+     * @param reportModels {@Link List<ReportModel>}
+     * @param currentLine  {@Link String}
+     * @param fileRecord   {@Link FileRecord}
+     */
+    private void readFlatFileAndMapsToJavaObject(List<FileRecord> fileRecords, List<ReportModel> reportModels, String currentLine, FileRecord fileRecord) {
+        readAndMapClientInformation(fileRecord, currentLine);
+        readAndMapProductInformation(fileRecord, currentLine);
+        readAndMapTransactionInformation(fileRecord, currentLine);
+        fileRecords.add(fileRecord);
+        reportModels.add(mapFileRecordToReportModel(fileRecord));
+    }
+
+    /**
+     * Method to read and map client information.
+     *
+     * @param fileRecord  {@link FileRecord}
+     * @param currentLine {@link String}
      */
     private void readAndMapClientInformation(final FileRecord fileRecord, final String currentLine) {
 
@@ -100,8 +113,10 @@ public class FileReaderImpl implements FileReader {
     }
 
     /**
-     * @param fileRecord
-     * @param currentLine
+     * Method to read and Map production information.
+     *
+     * @param fileRecord  {@link FileRecord}
+     * @param currentLine {@link String}
      */
     private void readAndMapProductInformation(final FileRecord fileRecord, final String currentLine) {
 
@@ -113,8 +128,10 @@ public class FileReaderImpl implements FileReader {
     }
 
     /**
-     * @param fileRecord
-     * @param currentLine
+     * Method to read and map Transaction information.
+     *
+     * @param fileRecord  {@link FileRecord}
+     * @param currentLine {@link String}
      */
     private void readAndMapTransactionInformation(final FileRecord fileRecord, final String currentLine) {
         fileRecord.setQuantityLong(new BigDecimal(currentLine.substring(52, 62).trim()));
@@ -122,7 +139,9 @@ public class FileReaderImpl implements FileReader {
     }
 
     /**
-     * @param fileRecord
+     * Maps file record to Reporting Model
+     *
+     * @param fileRecord {@link FileRecord}
      * @return
      */
     private ReportModel mapFileRecordToReportModel(final FileRecord fileRecord) {

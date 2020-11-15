@@ -4,19 +4,18 @@ It is mainly developed to
  - Read the Future Transactions done by client from flat file.
     Note - In future, flat File can be read by defing a xml schema for a record. https://jrecordbind.org/
  - Process the file and format it.
- - Write the file to output file output.csv. 
+ - Write the file to output file output.csv.
 
-#Technical Details and Design
-1. Currently The scheduler is schduled at frequency of 1 minute to generate Output.csv. However, it(cron expression) can be changed to daily frequency.
-2. This project follows SOLID principle.
-    - Every class is his own single Responsiblity
-    - They follow Dependency Injection pattern
-    - Code is not tightly coupled. That is implementations are abstracted.
-3. All constants are housed in one file.
-4. Frequency of Cron job can be read from application.properties. If requried. Hence no external deployment is needed.
+#Technical Details and Design Highlights.
+    1. ClientReportScheduler is main entry point that will trigger the reporting job. Currently The scheduler is schduled at frequency of 1 minute to generate Output.csv. However, it(cron expression) can be changed to daily frequency.
+    2. The solution complies with software engineering design principles. Like the Single Responsibility principle, Interface segregation principle (Dependency Injection)
+    3. Code is not tightly coupled. That is implementations are abstracted.
+    4. The solution is having clean, Well documented, Clear logging, optimized code with Unit testing coverage and clear comments and documentation.
+    5. The Solution is based on latest java8 stream API.
+    6. The solution keeps maximum data immutable. Increasing performance.
+    7. The solution uses centralized constants and configuration, making is flexible. The feature can be easily available in production without any deployment.
 Note - the Requirement says that input flat file contains future transactions for client 1234. But actually, it contains data for other clients as well.
 So the solution has an addition feature (flag), which will allow the user to generate the report for all the client OR ONLY for client 1234, without any code change and without any deployed.
-
 
 #Softwares requirement.
 It is a stand alone Java project. To run this project , you require the following componets/software on your machine.

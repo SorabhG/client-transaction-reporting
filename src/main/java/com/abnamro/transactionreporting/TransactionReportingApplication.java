@@ -23,6 +23,11 @@ import static com.abnamro.transactionreporting.constant.TransactionReportingCons
 @EnableScheduling
 public class TransactionReportingApplication {
 
+	/**
+	 *
+	 * @param args {@link String}
+	 * @throws IOException
+	 */
 	public static void main(String[] args) throws IOException {
 		SpringApplication.run(TransactionReportingApplication.class, args);
 

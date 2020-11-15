@@ -13,7 +13,7 @@ import java.util.List;
 import static com.abnamro.transactionreporting.constant.TransactionReportingConstants.CSV_OUTPUT_FILE;
 
 /**
- * Orchestration file Responsible of reading input flat feed, formatting report and writing to CSV file.
+ * Orchestration file. Responsible of reading input flat feed, formatting report and writing to CSV file.
  */
 @Component
 @Slf4j

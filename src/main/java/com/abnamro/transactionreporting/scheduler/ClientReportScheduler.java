@@ -10,14 +10,15 @@ import java.io.IOException;
 @Slf4j
 @Component
 /**
- * Scheduler to trigger reporting.
+ * Spring Scheduler to trigger transactin reporting.
  */
 public class ClientReportScheduler {
 
     private final ReportingService reportingService;
 
     /**
-     * Constuctor Intialization.
+     * Constuctor Initialization.
+     *
      * @param reportingService
      */
     public ClientReportScheduler(ReportingService reportingService) {
@@ -25,6 +26,11 @@ public class ClientReportScheduler {
     }
 
 
+    /**
+     * Main entry point. This method is currently scheduled at 1 minute frequency. It will trigger the reporting services.
+     *
+     * @throws IOException
+     */
     @Scheduled(cron = "${reportingService.job.interval:0 */1 * ? * *}")
     // @Scheduled(cron = "${reportingService.job.interval:0 0 6 * * ?}")  --every day 6 am.
     public void startReporting() throws IOException {
