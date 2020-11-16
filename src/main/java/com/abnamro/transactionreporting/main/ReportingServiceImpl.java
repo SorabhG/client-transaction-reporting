@@ -30,7 +30,7 @@ public class ReportingServiceImpl implements ReportingService {
      * @param reportProcessor {@link ReportProcessor}
      * @param fileWriter      {@link FileWriter}
      */
-    public ReportingServiceImpl(FileReader fileReader, ReportProcessor reportProcessor, FileWriter fileWriter) {
+    public ReportingServiceImpl(final FileReader fileReader, final ReportProcessor reportProcessor, final FileWriter fileWriter) {
         this.fileReader = fileReader;
         this.reportProcessor = reportProcessor;
         this.fileWriter = fileWriter;

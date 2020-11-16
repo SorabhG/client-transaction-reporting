@@ -21,7 +21,7 @@ public class ClientReportScheduler {
      *
      * @param reportingService
      */
-    public ClientReportScheduler(ReportingService reportingService) {
+    public ClientReportScheduler(final ReportingService reportingService) {
         this.reportingService = reportingService;
     }
 

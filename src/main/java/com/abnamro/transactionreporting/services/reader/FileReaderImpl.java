@@ -33,7 +33,7 @@ public class FileReaderImpl implements FileReader {
      *
      * @param transactionReportingPropertyValues
      */
-    public FileReaderImpl(TransactionReportingPropertyValues transactionReportingPropertyValues) {
+    public FileReaderImpl(final TransactionReportingPropertyValues transactionReportingPropertyValues) {
         this.transactionReportingPropertyValues = transactionReportingPropertyValues;
     }
 

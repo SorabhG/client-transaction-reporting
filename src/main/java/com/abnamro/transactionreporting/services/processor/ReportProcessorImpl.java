@@ -28,7 +28,7 @@ public class ReportProcessorImpl implements ReportProcessor {
      * @return
      */
     @Override
-    public List<ReportModel> formatReport(List<ReportModel> reportFeilds) {
+    public List<ReportModel> formatReport(final List<ReportModel> reportFeilds) {
         getLogger().info("Report Formatting :: Started");
         List<ReportModel> formattedReport = reportFeilds.stream().collect(
                 groupingBy(
